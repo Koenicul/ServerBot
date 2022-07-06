@@ -7,13 +7,13 @@ import docker
 Session = sessionmaker(bind=db.engine)
 session = Session()
 
-client = docker.from_env()
-
 class Server(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
     @commands.command(name="Start", help="Start a docker container")
     async def Start(self, ctx, container):
-        print(client.containers.list)
-        
+        pass
+
+def setup(bot):
+    bot.add_cog(Server(bot))
