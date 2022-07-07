@@ -23,19 +23,19 @@ bot = commands.Bot(command_prefix=PREFIX, case_insensitive=True, help_command=he
 
 @bot.command(name="Load", help="Loads a cog")
 async def Load(ctx, extention):
-    if ctx.author.id == os.getenv("Owner_id"):
+    if ctx.author.id == int(os.getenv("Owner_id")):
         bot.load_extension(f'cogs.{extention}')
         await ctx.send(f'Loaded {extention}')
 
 @bot.command(name="Unload", help="Unloads a cog")
 async def Unload(ctx, extention):
-    if ctx.author.id == os.getenv("Owner_id"):
+    if ctx.author.id == int(os.getenv("Owner_id")):
         bot.unload_extension(f'cogs.{extention}')
         await ctx.send(f'Unloaded {extention}')
 
 @bot.command(name="Reload", help="Reloads a cog or all cogs")
 async def Reload(ctx, extention):
-    if ctx.author.id == os.getenv("Owner_id"):
+    if ctx.author.id == int(os.getenv("Owner_id")):
         if extention == "all":
             for filename in os.listdir('./cogs'):
                 if filename.endswith('.py'):
