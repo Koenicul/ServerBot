@@ -2,3 +2,4 @@ discord.py
 SQLAlchemy
 python-dotenv
 docker
+psycopg2
