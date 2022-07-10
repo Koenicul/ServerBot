@@ -14,7 +14,7 @@ class Server(Base):
 
     id = Column(Integer, primary_key=True)
     server_name = Column(String)
-    server_id = Column(String)
+    server_id = Column(Integer)
     welcome_message_bool = Column(Boolean)
     welcome_message = Column(String)
     welcome_message_channel = Column(Integer)
