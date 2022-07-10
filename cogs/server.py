@@ -16,7 +16,7 @@ class Server(commands.Cog):
     
     @commands.command(name="Start", help="Start a docker container")
     async def Start(self, ctx, container):
-        if ctx.author.id == int(os.getenv("Owner_id")):
+        if ctx.author.id == int(os.getenv("Owner_id")) or container == "minecraft":
             con = client.containers.get(container)
             con.start()
             await ctx.send(f"{con.name} started")
@@ -30,9 +30,11 @@ class Server(commands.Cog):
 
     @commands.command(name="ListContainers", help="List all containers")
     async def ListContainers(self, ctx):
+        string = ""
         if ctx.author.id == int(os.getenv("Owner_id")):
             for i in client.containers.list(all=True):
-                await ctx.send(f"{i.name}")
+                string += f"{i.name}\n"
+            await ctx.send(string)
 
 def setup(bot):
     bot.add_cog(Server(bot))
