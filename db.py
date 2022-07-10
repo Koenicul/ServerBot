@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Float, ForeignKey, Integer, String, Boolean
+from sqlalchemy import Column, Float, ForeignKey, Integer, String, Boolean, BigInteger
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
@@ -14,7 +14,7 @@ class Server(Base):
 
     id = Column(Integer, primary_key=True)
     server_name = Column(String)
-    server_id = Column(Integer)
+    server_id = Column(BigInteger)
     welcome_message_bool = Column(Boolean)
     welcome_message = Column(String)
     welcome_message_channel = Column(Integer)
