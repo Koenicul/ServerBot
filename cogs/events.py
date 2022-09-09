@@ -38,7 +38,6 @@ class Start(commands.Cog):
     async def check_server(self):
         await self.bot.wait_until_ready()
         channel = self.bot.get_channel(int(os.getenv("Log_channel")))
-        await channel.send("Checking servers")
         for guild in self.bot.guilds:
             server = session.query(db.Server).filter(db.Server.server_id == guild.id).first()
             if server == None:
