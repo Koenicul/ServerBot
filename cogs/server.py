@@ -36,5 +36,5 @@ class Server(commands.Cog):
                 string += f"{i.name}\n"
             await ctx.send(string)
 
-def setup(bot):
-    bot.add_cog(Server(bot))
+async def setup(bot):
+    await bot.add_cog(Server(bot))

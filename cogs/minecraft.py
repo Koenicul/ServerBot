@@ -25,5 +25,5 @@ class Minecraft(commands.Cog):
             channel = self.bot.get_channel(int(os.getenv("Log_channel")))
             await channel.send(f"Minecraft server is now {con.status}")
 
-def setup(bot):
-    bot.add_cog(Minecraft(bot))
+async def setup(bot):
+    await bot.add_cog(Minecraft(bot))

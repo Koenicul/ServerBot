@@ -52,5 +52,5 @@ class Start(commands.Cog):
                 session.commit()
                 await channel.send(f"{server.server_name} has been removed")
 
-def setup(bot):
-    bot.add_cog(Start(bot))
+async def setup(bot):
+    await bot.add_cog(Start(bot))

@@ -35,5 +35,5 @@ class Welcome(commands.Cog):
         await ctx.send("Welcome message channel set")
         session.commit()
 
-def setup(bot):
-    bot.add_cog(Welcome(bot))
+async def setup(bot):
+    await bot.add_cog(Welcome(bot))

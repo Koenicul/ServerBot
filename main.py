@@ -5,6 +5,7 @@ load_dotenv()
 import os
 import db
 from sqlalchemy.orm import sessionmaker
+import asyncio
 
 Session = sessionmaker(bind=db.engine)
 session = Session()
@@ -16,21 +17,20 @@ help_command = commands.DefaultHelpCommand(
     no_category = 'Commands'
 )
 
-intents = Intents.default()
-intents.members = True
+intents = Intents.all()
 
 bot = commands.Bot(command_prefix=PREFIX, case_insensitive=True, help_command=help_command, intents=intents)
 
 @bot.command(name="Load", help="Loads a cog")
 async def Load(ctx, extention):
     if ctx.author.id == int(os.getenv("Owner_id")):
-        bot.load_extension(f'cogs.{extention}')
+        await bot.load_extension(f'cogs.{extention}')
         await ctx.send(f'Loaded {extention}')
 
 @bot.command(name="Unload", help="Unloads a cog")
 async def Unload(ctx, extention):
     if ctx.author.id == int(os.getenv("Owner_id")):
-        bot.unload_extension(f'cogs.{extention}')
+        await bot.unload_extension(f'cogs.{extention}')
         await ctx.send(f'Unloaded {extention}')
 
 @bot.command(name="Reload", help="Reloads a cog or all cogs")
@@ -39,16 +39,12 @@ async def Reload(ctx, extention):
         if extention == "all":
             for filename in os.listdir('./cogs'):
                 if filename.endswith('.py'):
-                    bot.unload_extension(f'cogs.{filename[:-3]}')
-                    bot.load_extension(f'cogs.{filename[:-3]}')
+                    await bot.unload_extension(f'cogs.{filename[:-3]}')
+                    await bot.load_extension(f'cogs.{filename[:-3]}')
             return await ctx.send("Reloaded all cogs")
-        bot.unload_extension(f'cogs.{extention}')
-        bot.load_extension(f'cogs.{extention}')
+        await bot.unload_extension(f'cogs.{extention}')
+        await bot.load_extension(f'cogs.{extention}')
         await ctx.send(f'Reloaded {extention}')
-
-for filename in os.listdir('./cogs'):
-    if filename.endswith('.py'):
-        bot.load_extension(f'cogs.{filename[:-3]}')
 
 @bot.command(name="Ping", help="Pong!")
 async def Ping(ctx):
@@ -58,5 +54,16 @@ async def Ping(ctx):
         print(s.welcome_message_bool)
         print(s.welcome_message)
         print(s.welcome_message_channel)
+        print("\n")
 
-bot.run(DISCORD_TOKEN)
+async def LoadExtentions():
+    for filename in os.listdir('./cogs'):
+        if filename.endswith('.py'):
+            await bot.load_extension(f'cogs.{filename[:-3]}')
+
+async def main():
+    async with bot:
+        await LoadExtentions()
+        await bot.start(DISCORD_TOKEN)
+
+asyncio.run(main())
